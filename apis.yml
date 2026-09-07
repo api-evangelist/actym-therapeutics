@@ -1,17 +1,30 @@
 aid: actym-therapeutics
 name: Actym Therapeutics
-description: 'Actym Therapeutics is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: 'Actym Therapeutics is a clinical-stage biotechnology company developing bacterial immunotherapies for solid tumors and fibrotic disease. Its STACT platform
+  engineers an attenuated Salmonella typhimurium vehicle to be administered systemically and to
+  deliver multiple therapeutic payloads that are amplified and produced locally at the disease
+  site, with the goal of raising efficacy while limiting systemic toxicity. Its lead asset,
+  ACTM-838, is in a Phase 1a/1b trial in patients with advanced solid tumors. Actym publishes no
+  developer program, no API and no machine-readable contract; the only agent-facing surfaces on
+  its own domain are a platform-generated llms.txt and an anonymous Wix Site MCP endpoint.'
 url: https://raw.githubusercontent.com/api-evangelist/actym-therapeutics/refs/heads/main/apis.yml
+image: https://static.wixstatic.com/media/6cf7e0_57b74df73b9347cebd4f77f40a6f71e1%7Emv2.png/v1/fit/w_2500,h_1330,al_c/6cf7e0_57b74df73b9347cebd4f77f40a6f71e1%7Emv2.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-06'
 modified: '2026-09-06'
 tags:
 - Company
+- Biotechnology
+- Pharmaceuticals
+- Life Sciences
+- Immuno-Oncology
+- Cancer
+- Clinical Trials
+- Drug Development
+- Healthcare
+- MCP
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -19,5 +32,34 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/actym-therapeutics-domain-security.yml
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.actymthera.com/
+- type: About
+  url: https://www.actymthera.com/about
+- type: Support
+  url: https://www.actymthera.com/contact
+- type: PrivacyPolicy
+  url: https://www.actymthera.com/privacy-policy
+- type: LinkedIn
+  url: https://www.linkedin.com/company/actym-therapeutics-inc
+- type: LLMsTxt
+  url: llms/actym-therapeutics-llms.txt
+- type: MCPServer
+  url: mcp/actym-therapeutics-mcp.yml
+- type: Authentication
+  url: authentication/actym-therapeutics-authentication.yml
+- type: Conventions
+  url: conventions/actym-therapeutics-conventions.yml
+- type: Conformance
+  url: conformance/actym-therapeutics-conformance.yml
+- type: Plans
+  url: plans/actym-therapeutics-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/actym-therapeutics-rate-limits.yml
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 11
+  pass: local-v3

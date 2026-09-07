@@ -1,0 +1,54 @@
+generated: '2026-09-06'
+method: derived
+source: mcp/actym-therapeutics-tools-list.json
+summary: >-
+  Actym Therapeutics publishes no API with an authentication scheme. The single callable
+  surface is the anonymous Wix Site MCP endpoint on its own domain, whose auth model is
+  described by the tool manifest itself: discovery (initialize, tools/list) and read tools
+  are anonymous, while the two Wix REST passthrough tools require a short-lived VISITOR
+  token that the same server mints on request.
+schemes:
+- id: anonymous
+  type: none
+  applies_to:
+  - 'MCP: initialize'
+  - 'MCP: tools/list'
+  - GetBusinessDetails
+  - SearchInSite
+  - SearchSiteApiDocs
+  - BrowseWixRESTDocsMenu
+  - ReadFullDocsArticle
+  - ReadFullDocsMethodSchema
+  evidence: >-
+    POST https://www.actymthera.com/_api/mcp with no Authorization header returned HTTP 200
+    and the full tool manifest on 2026-09-06.
+- id: wix-visitor-token
+  type: bearer
+  in: tool-parameter
+  parameter: visitorToken
+  issued_by: 'MCP tool GenerateVisitorToken (no credentials required)'
+  applies_to:
+  - CallWixSiteAPI
+  - ExecuteWixAPI
+  evidence: >-
+    Tool description, verbatim: "Visitor access token. Use GenerateVisitorToken first if not
+    available." GenerateVisitorToken itself declares no parameters.
+  note: >-
+    This is a visitor session, not an authenticated identity — it grants only what an
+    anonymous browser visitor could do. There is no API key, no OAuth flow, no user account.
+observed:
+  http_401:
+    url: https://www.actymthera.com/_api/mcp
+    method: GET
+    status: 401
+    body: '{"error":"invalid_token","error_description":"Missing Authorization header"}'
+    note: The GET surface challenges; the JSON-RPC POST surface used by MCP clients does not.
+absent:
+  api_keys: true
+  oauth2: true
+  openid_connect: true
+  mutual_tls: true
+  evidence: 'No /.well-known/openid-configuration or /.well-known/oauth-authorization-server (HTTP 400 on both hosts, 2026-09-06).'
+docs: null
+notes:
+- 'No scopes/ artifact is written: there is no OAuth surface, so there is no scope vocabulary to record.'

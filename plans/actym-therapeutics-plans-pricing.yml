@@ -1,0 +1,19 @@
+generated: '2026-09-06'
+method: searched
+source: https://www.actymthera.com/
+plan_count: 0
+plans: []
+summary: >-
+  Actym Therapeutics publishes no plans, tiers or pricing of any kind. It is a clinical-stage
+  biotechnology company developing bacterial immunotherapies (STACT platform, lead asset
+  ACTM-838 in a Phase 1a/1b trial); it sells no software product and has no commercial API.
+  Its site is six pages — home, science, pipeline, about, media, patients — plus a contact
+  page and a privacy policy. The one callable surface, the Wix Site MCP endpoint, is free and
+  anonymous and is provided by the site platform, not sold by Actym.
+evidence:
+- url: https://www.actymthera.com/sitemap.xml
+  status: 200
+  note: 'Full page inventory: media, science, about, pipeline, home, patients. No pricing or plans page exists.'
+- url: https://www.actymthera.com/
+  status: 200
+  note: No pricing, plans, or purchase surface anywhere in the navigation.

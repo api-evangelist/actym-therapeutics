@@ -1,0 +1,28 @@
+generated: '2026-09-06'
+method: probed
+source: https://www.actymthera.com/_api/mcp
+limit_count: 0
+rate_limits: []
+summary: >-
+  No rate limits are published or signalled. Actym Therapeutics documents no API, and the one
+  live surface — the anonymous Wix Site MCP endpoint on its own domain — returned no
+  rate-limit headers on any observed response.
+headers_observed: []
+headers_checked:
+- X-RateLimit-Limit
+- X-RateLimit-Remaining
+- X-RateLimit-Reset
+- RateLimit
+- RateLimit-Policy
+- Retry-After
+evidence:
+- url: https://www.actymthera.com/_api/mcp
+  method: POST
+  status: 200
+  note: >-
+    Response headers on a successful tools/list, 2026-09-06 — content-type, mcp-session-id,
+    etag, pragma, cache-control, x-wix-request-id, set-cookie, x-robots-tag, server,
+    x-content-type-options, accept-ranges, date, x-served-by, x-cache, vary,
+    strict-transport-security, x-seen-by, content-length, via, alt-svc. No rate-limit family
+    header of any kind, and no documented limit to record.
+exhaustion_status: null

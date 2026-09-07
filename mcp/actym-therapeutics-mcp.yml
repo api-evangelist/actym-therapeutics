@@ -1,0 +1,99 @@
+generated: '2026-09-06'
+method: probed
+source: https://www.actymthera.com/_api/mcp
+name: Actym Therapeutics Site MCP Server
+slug: actym-therapeutics
+status: live
+summary: >-
+  Actym Therapeutics serves a live, anonymous Model Context Protocol endpoint on its own
+  domain at https://www.actymthera.com/_api/mcp. The server is PLATFORM-AUTHORED: it is the
+  Wix Site MCP runtime that Wix exposes for every site it hosts, advertised by the site's own
+  llms.txt. Actym publishes it from its own host and it is genuinely reachable by an agent
+  today, but the tool surface is Wix's generic site-visitor assistant, not an Actym-authored
+  API. No Actym-specific business tools are exposed; the site's only installed Wix business
+  app is the Blog app.
+authorship: platform          # platform | provider — Wix Site MCP, not authored by Actym
+platform: Wix Site MCP
+platform_docs: https://dev.wix.com/docs/develop-websites/articles/get-started/about-the-wix-site-mcp
+
+deployment:
+  mode: remote
+  endpoint: https://www.actymthera.com/_api/mcp
+  auth: none
+  verified: probed
+
+protocol:
+  version: '2025-06-18'
+  server_name: 'Site Visitor Assistant for site "Actym" (https://www.actymthera.com/_api/mcp)'
+  server_version: 1.0.0
+  capabilities:
+    tools:
+      listChanged: true
+    logging: {}
+  transport: streamable-http (JSON-RPC 2.0 POST)
+
+x-evidence:
+  fetched: '2026-09-06'
+  tools_list:
+    url: https://www.actymthera.com/_api/mcp
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 200
+    content_type: application/json; charset=utf-8
+    tool_count: 9
+    saved: mcp/actym-therapeutics-tools-list.json
+  initialize:
+    url: https://www.actymthera.com/_api/mcp
+    method: POST
+    http_status: 200
+  get_anonymous:
+    url: https://www.actymthera.com/_api/mcp
+    method: GET
+    http_status: 401
+    note: 'GET without an Authorization header returns {"error":"invalid_token"}; the JSON-RPC POST surface is anonymous.'
+
+tools:
+- name: GetBusinessDetails
+  description: Business and site details (timezone, display name, business name, installed app capabilities).
+  parameters: []
+  mutating: false
+- name: SearchInSite
+  description: Full-text search across the site's public content.
+  parameters: [searchTerm]
+  mutating: false
+- name: SearchSiteApiDocs
+  description: Returns the Wix API documentation for the business solutions installed on this site.
+  parameters: [searchTerm]
+  mutating: false
+- name: GenerateVisitorToken
+  description: Creates a visitor session and returns a visitor access token; prerequisite for CallWixSiteAPI.
+  parameters: []
+  mutating: false
+- name: CallWixSiteAPI
+  description: Calls a Wix REST API method on the site on a visitor's behalf.
+  parameters: [visitorToken, url, method, body]
+  mutating: true
+- name: ExecuteWixAPI
+  description: Runs JavaScript against the Wix REST API on the site; carries an explicit hasMutations flag.
+  parameters: [code, reason, hasMutations, sourceDocUrls, visitorToken]
+  mutating: true
+- name: BrowseWixRESTDocsMenu
+  description: Browse the Wix REST API documentation menu hierarchy.
+  parameters: [menuUrl, reason]
+  mutating: false
+- name: ReadFullDocsArticle
+  description: Fetch a full article from the Wix developer documentation portal.
+  parameters: [articleUrl]
+  mutating: false
+- name: ReadFullDocsMethodSchema
+  description: Fetch the full request/response schema for a Wix API method.
+  parameters: [articleUrl, reason]
+  mutating: false
+
+site_capabilities:
+- 'Blog App: list and query blog posts'
+
+notes:
+- The real input schemas for all nine tools were returned anonymously and are saved verbatim in mcp/actym-therapeutics-tools-list.json.
+- GetBusinessDetails reports the underlying Wix business name as "Trio Pharmaceuticals", the company's former name; the site display name is "Actym".
+- No tool crosswalk is emitted: Actym publishes no OpenAPI and no GraphQL surface, so there is nothing to bind these tools to.

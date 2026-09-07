@@ -1,0 +1,71 @@
+generated: '2026-09-06'
+method: derived
+source: mcp/actym-therapeutics-tools-list.json
+summary: >-
+  Derived from the only machine-readable contract Actym Therapeutics serves — the anonymous
+  Wix Site MCP tool manifest on its own domain. Actym publishes no OpenAPI, no REST reference
+  and no developer documentation, so every convention below is read off the MCP surface and
+  its platform docs, not off an Actym-authored contract.
+auth_style: >-
+  Anonymous for discovery and read tools; a server-minted visitor token
+  (GenerateVisitorToken -> visitorToken) for the two Wix REST passthrough tools. See
+  authentication/actym-therapeutics-authentication.yml.
+transport:
+  protocol: JSON-RPC 2.0 over HTTPS POST
+  endpoint: https://www.actymthera.com/_api/mcp
+  content_type: application/json
+  accept: application/json, text/event-stream
+  session: 'Server returns an mcp-session-id response header (observed: mcp-session-id).'
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  evidence: >-
+    No Idempotency-Key header, replay window or request-deduplication mechanism is documented
+    on any Actym surface, and none is declared in the MCP tool schemas. The two mutating tools
+    (CallWixSiteAPI, ExecuteWixAPI) expose no idempotency parameter.
+  note: >-
+    ExecuteWixAPI carries a `hasMutations` boolean, which declares INTENT to an agent host but
+    provides no replay protection.
+reversibility:
+  grade: na
+  applicable: false
+  evidence: >-
+    Actym exposes no first-party write surface. The site's only installed Wix business app is
+    the Blog app, and the generic passthrough tools (CallWixSiteAPI, ExecuteWixAPI) can only
+    reach what an anonymous visitor could reach on a six-page marketing site with no store, no
+    bookings and no forms wired to a business app. There is no create/update/delete operation
+    of Actym's own to reverse, so no reversal operation and no window is asserted.
+  note: 'na, not zero — nothing to take back, so the dimension does not apply.'
+dry_run_mode:
+  supported: na
+  evidence: 'No write surface, so no rehearsal mode applies.'
+pagination:
+  style: null
+  evidence: 'Not documented. No paged collection surface is published.'
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+request_id_tracing:
+  header: x-wix-request-id
+  evidence: 'Observed on the MCP response, 2026-09-06. Platform-emitted, not documented by Actym.'
+versioning:
+  style: 'MCP protocolVersion negotiation only'
+  current: '2025-06-18'
+  evidence: 'initialize response, 2026-09-06.'
+  note: No product API version, no dated version header, no version policy page.
+error_envelope:
+  shape: 'JSON-RPC 2.0 error object; the GET surface returns {"error","error_description"}'
+  rfc9457: false
+rate_limit_signaling:
+  headers: []
+  evidence: 'No X-RateLimit-*, RateLimit-* or Retry-After header observed on any 2xx response, 2026-09-06.'
+cross_links:
+  authentication: authentication/actym-therapeutics-authentication.yml
+  mcp: mcp/actym-therapeutics-mcp.yml
+  conformance: conformance/actym-therapeutics-conformance.yml
+  rate_limits: rate-limits/actym-therapeutics-rate-limits.yml
+notes:
+- 'No Idempotency pointer is emitted in apis.yml: idempotency.coverage is none.'

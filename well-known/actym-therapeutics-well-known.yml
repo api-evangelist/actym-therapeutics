@@ -1,0 +1,65 @@
+generated: '2026-09-06'
+method: probed
+source: https://www.actymthera.com/
+summary: >-
+  No /.well-known/ document is served on any Actym Therapeutics host. The Wix origin answers
+  HTTP 400 with an HTML error shell for every /.well-known/ path probed, which is a platform
+  routing response and not a served document. No pointer of type WellKnown or SecurityTxt is
+  emitted, because nothing was found.
+hosts:
+- host: www.actymthera.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 400
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 400
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 400
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 400
+    file: null
+  - path: /.well-known/api-catalog
+    status: 400
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 400
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 400
+    file: null
+  - path: /.well-known/agent.json
+    status: 400
+    file: null
+  - path: /.well-known/mcp.json
+    status: 400
+    file: null
+- host: actymthera.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 400
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 400
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 400
+    file: null
+  - path: /.well-known/api-catalog
+    status: 400
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 400
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 400
+    file: null
+  - path: /.well-known/agent.json
+    status: 400
+    file: null
+notes:
+- 'Every 400 body begins with <!DOCTYPE html> — an HTML shell, not a document. Treated as a miss.'
+- 'Control: /robots.txt and /sitemap.xml return 200 with real content on both hosts, so the origin is reachable and the 400s are genuine path misses.'
+- No A2A agent card was found, so no a2a/ artifact was written.

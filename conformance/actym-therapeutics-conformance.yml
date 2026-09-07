@@ -1,0 +1,59 @@
+generated: '2026-09-06'
+method: probed
+source: https://www.actymthera.com/_api/mcp
+summary: >-
+  Actym Therapeutics publishes no OpenAPI, AsyncAPI, GraphQL SDL or industry data contract.
+  The only machine-readable surfaces it serves are two agent-facing conventions: an llms.txt
+  and a Model Context Protocol endpoint, both delivered by the Wix platform on Actym's own
+  domain. No domain standard for the biotech / clinical-research market (HL7 FHIR, CDISC,
+  ICH E2B, SPL) is declared or implemented anywhere on the surface.
+conformance:
+- id: mcp
+  name: Model Context Protocol
+  version: '2025-06-18'
+  conforms: true
+  evidence: >-
+    POST https://www.actymthera.com/_api/mcp {"jsonrpc":"2.0","method":"initialize"} returned
+    HTTP 200 with protocolVersion "2025-06-18" and a tools capability; tools/list returned 9
+    tools with inputSchema. Saved verbatim to mcp/actym-therapeutics-tools-list.json.
+- id: json-rpc-2.0
+  name: JSON-RPC 2.0
+  conforms: true
+  evidence: >-
+    The MCP endpoint answers JSON-RPC 2.0 envelopes (jsonrpc/id/result) — observed 2026-09-06.
+- id: llms-txt
+  name: llms.txt
+  conforms: true
+  evidence: 'GET https://www.actymthera.com/llms.txt -> HTTP 200, text/plain, 3,262 bytes.'
+- id: robots-txt
+  name: robots.txt (RFC 9309)
+  conforms: true
+  evidence: 'GET https://www.actymthera.com/robots.txt -> HTTP 200 with a Sitemap directive.'
+- id: sitemap-xml
+  name: sitemaps.org XML sitemap
+  conforms: true
+  evidence: 'GET https://www.actymthera.com/sitemap.xml -> HTTP 200, sitemapindex with 4 child sitemaps.'
+- id: oauth2
+  name: OAuth 2.0
+  conforms: false
+  evidence: 'No /.well-known/oauth-authorization-server or /.well-known/oauth-protected-resource (HTTP 400 on both hosts). The MCP endpoint is anonymous.'
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: 'No OpenAPI at any probed path on www.actymthera.com or actymthera.com (400/404).'
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: 'No error contract published; no API with a documented error envelope.'
+domain_standard:
+  applicable: true
+  sector: biotechnology / clinical-stage pharmaceuticals
+  declared: false
+  evidence: >-
+    No HL7 FHIR, CDISC SDTM/ODM, ICH E2B, SPL or comparable life-sciences data standard is
+    named or implemented on any Actym surface. Actym is a clinical-stage drug developer with
+    a six-page marketing site and no data-exchange product, so no domain standard applies to
+    a contract it does not publish. Reward-only: recorded as absent, not as a failure.
+certifications: []
+notes:
+- Nothing here is a compliance certification, so no `Compliance` pointer is emitted.
